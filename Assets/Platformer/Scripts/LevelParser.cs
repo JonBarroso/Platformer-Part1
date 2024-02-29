@@ -9,6 +9,8 @@ public class LevelParser : MonoBehaviour
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject stonePrefab;
+    public GameObject spikePrefab;
+    public GameObject goalPrefab;
     public Transform environmentRoot;
 
     // --------------------------------------------------------------------------
@@ -96,6 +98,20 @@ public class LevelParser : MonoBehaviour
                         AddClickHandler(newObj);
                     }
                 }
+                if (letter == 'e')
+                {
+                    Vector3 newPos = new Vector3(col, row, 0f);
+                    GameObject newObj = Instantiate(spikePrefab, newPos, Quaternion.identity, environmentRoot);
+                    //Transform newTransform = newObj.transform;
+                    //newTransform.position = newPos;
+                }
+                if (letter == 'g')
+                {
+                    Vector3 newPos = new Vector3(col, row, 0f);
+                    GameObject newObj = Instantiate(goalPrefab, newPos, Quaternion.identity, environmentRoot);
+                    //Transform newTransform = newObj.transform;
+                    //newTransform.position = newPos;
+                }
             }
                 row++;
         }
@@ -115,4 +131,5 @@ public class LevelParser : MonoBehaviour
         var clickable = obj.AddComponent<Brick>();
         clickable.levelParser = this;
     }
+
 }

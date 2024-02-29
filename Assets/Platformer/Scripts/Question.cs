@@ -13,12 +13,24 @@ public class Question : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Vector3 Colide2 = collision.contacts[0].point;
+            Vector3 questionHit = transform.position;
+            if (Colide2.y < questionHit.y)
+            {
+                gameManager.IncrementCoinsScore(100);
+            }
+        }
+    }
     private void OnMouseDown()
     {
         if (gameManager != null)
         {
 
-            gameManager.IncrementScore();
+            gameManager.IncrementCoinsScore(100);
         }
     }
     void Update()

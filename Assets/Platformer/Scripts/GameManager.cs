@@ -10,13 +10,20 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public TextMeshProUGUI CoinsText;
 
-    private int score = 0;
+    public TextMeshProUGUI MarioScoreText;
+    public bool lost = false;
 
-    // Method to increment the score
-    public void IncrementScore()
+    private int coins = 0;
+    private int score = 0;
+    public void IncrementCoinsScore(int pointsToAdd)
     {
-        score++;
-        CoinsText.text = "<sprite=0>x" + score.ToString(); // Update the coin text UI with the new score
+        coins++;
+        CoinsText.text = "<sprite=0>x" + coins.ToString(); 
+    }
+        public void IncrementScore(int pointsToAdd)
+    {
+        score += pointsToAdd;
+        MarioScoreText.text = "Score: " + score.ToString();
     }
     void Start()
     {
@@ -25,8 +32,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int intTime = 400 - (int)(Time.realtimeSinceStartup * 2.5);
+        float remainingTime = Mathf.Max(0, 100 - Time.realtimeSinceStartup); 
+        int intTime = (int)remainingTime;
         string timeStr = $"Time \n {intTime}";
         timerText.text = timeStr;
+
+        if (intTime <= 0 && !lost)
+        {
+            lost = true; 
+            Debug.Log("You lose!");
+        }
     }
 }
